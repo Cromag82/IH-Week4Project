@@ -4,6 +4,7 @@ import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.Accounts.enums.Status;
 import IHProject.project.embeddables.Money;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class Savings extends Checking {
-    @Value("0.00025")
+    @ColumnDefault(value = "0.00025")
     @DecimalMax(value = "0.5", inclusive = false)
     @Digits(integer=1, fraction=5)
     private BigDecimal interestRate;

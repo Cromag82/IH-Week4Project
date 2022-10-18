@@ -1,7 +1,7 @@
 package IHProject.project.Accounts.entities;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
-import IHProject.project.embeddable.Money;
+import IHProject.project.embeddables.Money;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,4 +43,12 @@ public class CreditCard {
     })
     @Embedded
     private Money penaltyFee;
+
+    public CreditCard(Money balance, @NonNull AccountHolders creditCardPrimaryOwner, Money creditLimit, BigDecimal interestRate, Money penaltyFee) {
+        this.balance = balance;
+        this.creditCardPrimaryOwner = creditCardPrimaryOwner;
+        this.creditLimit = creditLimit;
+        this.interestRate = interestRate;
+        this.penaltyFee = penaltyFee;
+    }
 }

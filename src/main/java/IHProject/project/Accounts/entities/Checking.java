@@ -1,6 +1,6 @@
 package IHProject.project.Accounts.entities;
 import IHProject.project.Accounts.enums.Status;
-import IHProject.project.embeddable.Money;
+import IHProject.project.embeddables.Money;
 import lombok.*;
 import IHProject.project.AccountHolders.entities.AccountHolders;
 
@@ -73,5 +73,12 @@ public class Checking {
         this.status = status;
         this.checkingPrimaryOwner = checkingPrimaryOwner;
         this.secondaryOwner = secondaryOwner;
+    }
+
+    public Checking(Money balance, LocalDate creationDate,String secreKey,  @NonNull AccountHolders checkingPrimaryOwner) {
+        this.balance = balance;
+        this.secreKey = secreKey;
+        this.creationDate = creationDate;
+        this.checkingPrimaryOwner = checkingPrimaryOwner;
     }
 }

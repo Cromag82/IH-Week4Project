@@ -1,4 +1,4 @@
-package IHProject.project.embeddable;
+package IHProject.project.embeddables;
 import javax.persistence.Embeddable;
 
 @Embeddable

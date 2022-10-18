@@ -2,7 +2,7 @@ package IHProject.project.Accounts.entities;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.Accounts.enums.Status;
-import IHProject.project.embeddable.Money;
+import IHProject.project.embeddables.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

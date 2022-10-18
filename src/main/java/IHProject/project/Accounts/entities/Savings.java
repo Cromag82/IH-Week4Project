@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class Savings extends Checking {
     @ColumnDefault(value = "0.00025")
     @DecimalMax(value = "0.5", inclusive = false)
-    @Digits(integer=1, fraction=5)
+    @Digits(integer=2, fraction=5)
     private BigDecimal interestRate;
 
     public Savings(long id, Money balance, String secreKey, @Value("1000") Money minimumBalance, Money penaltyFee, LocalDate creationDate, Status status, @NonNull AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner, BigDecimal interestRate) throws Exception {

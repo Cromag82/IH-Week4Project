@@ -20,4 +20,8 @@ public class StudentChecking extends Checking{
     public StudentChecking(long id, Money balance, String secreKey, Money penaltyFee, LocalDate creationDate, Status status, @NonNull AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner) {
         super(id, balance, secreKey, penaltyFee, creationDate, status, checkingPrimaryOwner, secondaryOwner);
     }
+
+    public StudentChecking(Money balance, LocalDate creationDate, String secreKey, @NonNull AccountHolders checkingPrimaryOwner) {
+        super(balance, creationDate, secreKey, checkingPrimaryOwner);
+    }
 }

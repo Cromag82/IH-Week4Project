@@ -6,6 +6,8 @@ import IHProject.project.AccountHolders.entities.AccountHolders;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import java.time.LocalDate;
 
 @Entity
@@ -26,6 +28,8 @@ public class Checking {
             @AttributeOverride(name="currency", column=@Column(name="mBcurrency")),
             @AttributeOverride(name="amount", column = @Column(name="mBamount"))
     })
+    @DecimalMin(value = "250.00")
+    @Digits(integer=10, fraction=2)
     private Money minimumBalance;
     @Embedded
     @AttributeOverrides({
@@ -38,6 +42,8 @@ public class Checking {
             @AttributeOverride(name="currency", column=@Column(name="mMFcurrency")),
             @AttributeOverride(name="amount", column = @Column(name="mMFBamount"))
     })
+    @DecimalMin(value = "12.00")
+    @Digits(integer=2, fraction=2)
     private Money monthlyMaintenanceFee;
     private LocalDate creationDate;
     @Enumerated
@@ -81,4 +87,7 @@ public class Checking {
         this.creationDate = creationDate;
         this.checkingPrimaryOwner = checkingPrimaryOwner;
     }
+
+
+
 }

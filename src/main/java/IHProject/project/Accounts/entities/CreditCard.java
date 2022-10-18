@@ -1,12 +1,11 @@
 package IHProject.project.Accounts.entities;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
-import IHProject.project.Money.Money;
+import IHProject.project.embeddable.Money;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Entity
 @AllArgsConstructor
@@ -27,9 +26,21 @@ public class CreditCard {
     @JoinColumn( name = "primaryOwnerid")
     private AccountHolders creditCardPrimaryOwner;
 
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Basic(optional=true)
-    private AccountHolders secondaryOwner;
+    private AccountHolders cCsecondaryOwner;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="currency", column=@Column(name="cLcurrency")),
+            @AttributeOverride(name="amount", column = @Column(name="CLamount"))
+    })
     private Money creditLimit;
     private BigDecimal interestRate;
+    @AttributeOverrides({
+            @AttributeOverride(name="currency", column=@Column(name="cCpFcurrency")),
+            @AttributeOverride(name="amount", column = @Column(name="cCpFamount"))
+    })
+    @Embedded
     private Money penaltyFee;
 }

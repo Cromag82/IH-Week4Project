@@ -15,8 +15,8 @@ public class CheckingService {
     @Autowired
     CheckingRepository checkingRepository;
 
-    public Money setBalance(long id, Money money) throws ResponseStatusException{
+    public void setBalance(long id, Money money) throws ResponseStatusException{
         checkingRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        return checkingRepository.findById(id).get().setBalance(money);
+        checkingRepository.findById(id).get().setBalance(money);
     }
 }

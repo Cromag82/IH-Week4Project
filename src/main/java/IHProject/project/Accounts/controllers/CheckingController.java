@@ -15,7 +15,7 @@ public class CheckingController {
 
     @PutMapping("/setBalance/{id}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Money getBalance(@PathVariable long id, @RequestParam Money money) {
-        return checkingService.setBalance(id, money);
+    public void getBalance(@PathVariable long id, @RequestParam Money money) {
+        checkingService.setBalance(id, money);
     }
 }

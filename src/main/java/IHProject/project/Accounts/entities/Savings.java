@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -23,6 +22,7 @@ public class Savings extends Checking {
     @DecimalMax(value = "0.5", inclusive = false)
     @Digits(integer=2, fraction=5)
     private BigDecimal interestRate;
+    private LocalDate interestApplication = LocalDate.now();
 
     public Savings(long id, Money balance, String secreKey, @Value("1000") Money minimumBalance, Money penaltyFee, LocalDate creationDate, Status status, @NonNull AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner, BigDecimal interestRate) throws Exception {
         super(id, balance, secreKey, minimumBalance, penaltyFee, creationDate, status, checkingPrimaryOwner, secondaryOwner);
@@ -42,6 +42,19 @@ public class Savings extends Checking {
     public void setSavingsMinimumBalance(Money newMinimumBalance) throws Exception {
         if (newMinimumBalance.getAmount().compareTo(BigDecimal.valueOf(100)) == -1) throw new Exception("Non valid minimum balance");
         this.setMinimumBalance(newMinimumBalance);
+
+    }
+
+    //interest applied according years
+    public void applyInterest (BigDecimal interestRate){
+        if ((LocalDate.now().getYear() - this.interestApplication.getYear()) > 1 ) {
+            this.setBalance(new Money(
+                    this.getBalance().getAmount().multiply(
+                    this.interestRate.add(BigDecimal.valueOf(1))).multiply(
+                    BigDecimal.valueOf((LocalDate.now().getYear() - this.interestApplication.getYear()))
+            )));
+        this.interestApplication.plusYears(LocalDate.now().getYear() - this.interestApplication.getYear());
+        }
 
     }
  }

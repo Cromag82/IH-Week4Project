@@ -90,7 +90,8 @@ public class Checking {
         this.checkingPrimaryOwner = checkingPrimaryOwner;
     }
 
-    public Money setBalance(Money balance) {
+    //normalmente set es void - cambiar si se refiere
+    public void setBalance(Money balance) {
         if (((balance.getAmount())).compareTo(this.minimumBalance.getAmount()) == -1) {
             return this.balance = new Money (balance.getAmount().subtract(this.penaltyFee.getAmount()));
         } else {

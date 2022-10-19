@@ -1,5 +1,6 @@
 package IHProject.project.Accounts.entities;
 import IHProject.project.Accounts.enums.Status;
+import IHProject.project.Transactions.Transactions;
 import IHProject.project.embeddables.Money;
 import lombok.*;
 import IHProject.project.AccountHolders.entities.AccountHolders;
@@ -11,6 +12,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -59,6 +61,17 @@ public class Checking {
     @Basic(optional=true)
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private AccountHolders secondaryOwner;
+
+    @OneToMany(mappedBy = "checkingList")
+    private List<Transactions> transactionsList;
+
+    public List<Transactions> getTransactionsList() {
+        return transactionsList;
+    }
+
+    public void setTransactionsList(List<Transactions> transactionsList) {
+        this.transactionsList = transactionsList;
+    }
 
     public Checking(long id, Money balance, String secreKey, Money minimumBalance, Money penaltyFee, LocalDate creationDate, Status status, @NonNull AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner) {
         this.id = id;

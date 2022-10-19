@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,8 @@ public class ThirdParty {
     @NotNull
     private String name;
 
-
-
+    public ThirdParty(String hashedKey, String name) {
+        this.hashedKey = hashedKey;
+        this.name = name;
+    }
 }

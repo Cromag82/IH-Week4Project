@@ -93,9 +93,9 @@ public class Checking {
     //normalmente set es void - cambiar si se refiere
     public void setBalance(Money balance) {
         if (((balance.getAmount())).compareTo(this.minimumBalance.getAmount()) == -1) {
-            return this.balance = new Money (balance.getAmount().subtract(this.penaltyFee.getAmount()));
+            this.balance = new Money (balance.getAmount().subtract(this.penaltyFee.getAmount()));
         } else {
-            return this.balance = balance;
+            this.balance = balance;
         }
 
     }

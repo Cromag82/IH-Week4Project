@@ -46,7 +46,7 @@ public class Savings extends Checking {
     }
 
     //interest applied according years
-    public void applyInterest (BigDecimal interestRate){
+    public void applyInterest (){
         if ((LocalDate.now().getYear() - this.interestApplication.getYear()) > 1 ) {
             this.setBalance(new Money(
                     this.getBalance().getAmount().multiply(

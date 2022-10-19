@@ -4,11 +4,11 @@ import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.embeddables.Money;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -50,6 +50,7 @@ public class CreditCard {
     })
     @Embedded
     private Money penaltyFee;
+    private LocalDate interestApplication = LocalDate.now();
 
     public CreditCard(Money balance, @NonNull AccountHolders creditCardPrimaryOwner, Money creditLimit, BigDecimal interestRate, Money penaltyFee) throws Exception {
         this.balance = balance;
@@ -62,5 +63,16 @@ public class CreditCard {
     public void setCreditCardInterestRate (BigDecimal newInterestRate) throws Exception {
         if (newInterestRate.compareTo(BigDecimal.valueOf(0.1)) == -1) throw new Exception("Non valid minimum interest rate");
         this.interestRate = newInterestRate;
+    }
+
+    public void applyInterest(){
+        if ((LocalDate.now().getMonthValue() - this.interestApplication.getMonthValue()) > 1 ) {
+            this.setBalance(new Money(
+               this.getBalance().getAmount().multiply(
+               this.interestRate.add(BigDecimal.valueOf(1))).multiply(
+               BigDecimal.valueOf((LocalDate.now().getMonthValue() - this.interestApplication.getMonthValue()))
+                    )));
+            this.interestApplication.plusMonths(LocalDate.now().getMonthValue() - this.interestApplication.getMonthValue());
+        }
     }
 }

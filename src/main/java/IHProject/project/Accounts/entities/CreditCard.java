@@ -24,7 +24,7 @@ public class CreditCard {
     @Embedded
     private Money balance;
 
-    @NonNull
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn( name = "primaryOwnerid")
     private AccountHolders creditCardPrimaryOwner;

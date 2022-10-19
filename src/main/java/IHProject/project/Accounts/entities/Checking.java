@@ -3,16 +3,17 @@ import IHProject.project.Accounts.enums.Status;
 import IHProject.project.embeddables.Money;
 import lombok.*;
 import IHProject.project.AccountHolders.entities.AccountHolders;
+import org.hibernate.annotations.ColumnDefault;
 
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 public class Checking {
@@ -29,8 +30,9 @@ public class Checking {
             @AttributeOverride(name="amount", column = @Column(name="mBamount"))
     })
     @DecimalMin(value = "250.00")
-    @Digits(integer=10, fraction=2)
+    @Digits(integer=3, fraction=2)
     private Money minimumBalance;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="currency", column=@Column(name="pFcurrency")),
@@ -42,7 +44,7 @@ public class Checking {
             @AttributeOverride(name="currency", column=@Column(name="mMFcurrency")),
             @AttributeOverride(name="amount", column = @Column(name="mMFBamount"))
     })
-    @DecimalMin(value = "12.00")
+    @ColumnDefault(value = "12.00")
     @Digits(integer=2, fraction=2)
     private Money monthlyMaintenanceFee;
     private LocalDate creationDate;
@@ -62,7 +64,7 @@ public class Checking {
         this.id = id;
         this.balance = balance;
         this.secreKey = secreKey;
-        this.minimumBalance = minimumBalance;
+        this.minimumBalance = new Money(BigDecimal.valueOf(250.00));
         this.penaltyFee = penaltyFee;
         this.creationDate = creationDate;
         this.status = status;
@@ -88,6 +90,12 @@ public class Checking {
         this.checkingPrimaryOwner = checkingPrimaryOwner;
     }
 
+    public Money setBalance(Money balance) {
+        if (((balance.getAmount())).compareTo(this.minimumBalance.getAmount()) == -1) {
+            return this.balance = new Money (balance.getAmount().subtract(this.penaltyFee.getAmount()));
+        } else {
+            return this.balance = balance;
+        }
 
-
+    }
 }

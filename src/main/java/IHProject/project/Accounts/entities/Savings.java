@@ -1,11 +1,9 @@
 package IHProject.project.Accounts.entities;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
-import IHProject.project.Accounts.enums.Status;
 import IHProject.project.embeddables.Money;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
@@ -24,14 +22,10 @@ public class Savings extends Checking {
     private BigDecimal interestRate;
     private LocalDate interestApplication = LocalDate.now();
 
-    public Savings(long id, Money balance, String secreKey, @Value("1000") Money minimumBalance, Money penaltyFee, LocalDate creationDate, Status status, @NonNull AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner, BigDecimal interestRate) throws Exception {
-        super(id, balance, secreKey, minimumBalance, penaltyFee, creationDate, status, checkingPrimaryOwner, secondaryOwner);
-        setInterestRate(interestRate);
-    }
-
-    public Savings(Money balance, LocalDate creationDate, BigDecimal interestRate,@NonNull AccountHolders checkingPrimaryOwner, String secreKey) throws Exception {
+    public Savings(Money balance, LocalDate creationDate, BigDecimal interestRate, AccountHolders checkingPrimaryOwner, AccountHolders checkingSecOwner, String secreKey) throws Exception {
         super(balance, creationDate, secreKey, checkingPrimaryOwner);
         setInterestRate(interestRate);
+
     }
 
     public void setInterestRate(BigDecimal newInterest) throws Exception {

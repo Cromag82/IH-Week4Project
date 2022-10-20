@@ -2,6 +2,8 @@ package IHProject.project.AccountHolders.entities;
 
 import IHProject.project.Accounts.entities.Checking;
 import IHProject.project.Accounts.entities.CreditCard;
+import IHProject.project.Security.Role;
+import IHProject.project.Security.User;
 import IHProject.project.embeddables.Adress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -18,11 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AccountHolders {
+public class AccountHolders extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     private String name;
 
@@ -50,4 +49,11 @@ public class AccountHolders {
     @JsonIgnore
     private List<CreditCard> creditCardList;
 
+    public AccountHolders(String name, LocalDate birthDate, Adress primaryAddress, Adress mailingAdress) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.primaryAddress = primaryAddress;
+        this.mailingAdress = mailingAdress;
+        this.getRoleList().add(new Role("USER"));
+    }
 }

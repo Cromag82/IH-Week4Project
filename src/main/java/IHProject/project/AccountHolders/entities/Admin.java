@@ -1,5 +1,7 @@
 package IHProject.project.AccountHolders.entities;
 
+import IHProject.project.Security.Role;
+import IHProject.project.Security.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +15,15 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
-public class Admin {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Admin extends User {
 
     @NotNull
     private String name;
+
+    public Admin(String name) {
+        this.getRoleList().add(new Role("ADMIN"));
+        this.name = name;
+    }
 }

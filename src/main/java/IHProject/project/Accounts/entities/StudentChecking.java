@@ -5,10 +5,10 @@ import IHProject.project.Accounts.enums.Status;
 import IHProject.project.embeddables.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -24,4 +24,5 @@ public class StudentChecking extends Checking{
     public StudentChecking(Money balance, LocalDate creationDate, String secreKey, AccountHolders checkingPrimaryOwner) {
         super(balance, creationDate, secreKey, checkingPrimaryOwner);
     }
+
 }

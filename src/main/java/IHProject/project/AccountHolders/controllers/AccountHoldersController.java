@@ -1,5 +1,6 @@
 package IHProject.project.AccountHolders.controllers;
 
+import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.AccountHolders.services.AccountHoldersService;
 import IHProject.project.Accounts.entities.Checking;
 import IHProject.project.embeddables.Money;
@@ -13,6 +14,12 @@ public class AccountHoldersController {
 
     @Autowired
     AccountHoldersService accountHoldersService;
+
+    @PostMapping("/newAccount")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public AccountHolders newAHAccount(@RequestBody AccountHolders aH) {
+        return accountHoldersService.newAHAccount(aH);
+    }
 
     @GetMapping("/balanceAccount/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -32,6 +39,7 @@ public class AccountHoldersController {
     public Money transferFunds(@PathVariable(name = "id") long idHolder, @RequestParam long idDest, @RequestParam Money money, @RequestParam String name) throws Exception, ResponseStatusException {
         return accountHoldersService.transferFunds(idHolder,idDest,money,name);
     }
+
 
 
 

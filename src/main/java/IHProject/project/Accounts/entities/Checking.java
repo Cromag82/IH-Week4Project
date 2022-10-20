@@ -1,6 +1,6 @@
 package IHProject.project.Accounts.entities;
 import IHProject.project.Accounts.enums.Status;
-import IHProject.project.Transactions.Transactions;
+import IHProject.project.Transactions.entities.Transactions;
 import IHProject.project.embeddables.Money;
 import lombok.*;
 import IHProject.project.AccountHolders.entities.AccountHolders;
@@ -53,7 +53,7 @@ public class Checking {
     @Enumerated
     private Status status;
 
-    @NonNull
+    //  @NonNull
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn( name = "primaryOwnerid")
     private AccountHolders checkingPrimaryOwner;
@@ -62,7 +62,7 @@ public class Checking {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private AccountHolders secondaryOwner;
 
-    @OneToMany(mappedBy = "checkingList")
+    @OneToMany(mappedBy = "checking")
     private List<Transactions> transactionsList;
 
     public List<Transactions> getTransactionsList() {
@@ -85,7 +85,7 @@ public class Checking {
         this.secondaryOwner = secondaryOwner;
     }
 
-    public Checking(long id, Money balance, String secreKey, Money penaltyFee, LocalDate creationDate, Status status, @NonNull AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner) {
+    public Checking(long id, Money balance, String secreKey, Money penaltyFee, LocalDate creationDate, Status status, AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner) {
         this.id = id;
         this.balance = balance;
         this.secreKey = secreKey;
@@ -96,14 +96,14 @@ public class Checking {
         this.secondaryOwner = secondaryOwner;
     }
 
-    public Checking(Money balance, LocalDate creationDate,String secreKey,  @NonNull AccountHolders checkingPrimaryOwner) {
+    public Checking(Money balance, LocalDate creationDate,String secreKey, AccountHolders checkingPrimaryOwner) {
         this.balance = balance;
         this.secreKey = secreKey;
         this.creationDate = creationDate;
         this.checkingPrimaryOwner = checkingPrimaryOwner;
+        this.secondaryOwner = secondaryOwner;
     }
 
-    //normalmente set es void - cambiar si se refiere
     public void setBalance(Money balance) {
         if (((balance.getAmount())).compareTo(this.minimumBalance.getAmount()) == -1) {
             this.balance = new Money (balance.getAmount().subtract(this.penaltyFee.getAmount()));

@@ -4,6 +4,7 @@ import IHProject.project.AccountHolders.controllers.DTO.CreditCardDTO;
 import IHProject.project.AccountHolders.controllers.DTO.SavingsDTO;
 import IHProject.project.AccountHolders.controllers.DTO.NewAccountDTO;
 import IHProject.project.AccountHolders.controllers.DTO.ThirdPartyDTO;
+import IHProject.project.AccountHolders.entities.Admin;
 import IHProject.project.AccountHolders.entities.ThirdParty;
 import IHProject.project.AccountHolders.repositories.AdminRepository;
 import IHProject.project.AccountHolders.repositories.ThirdPartyRepository;
@@ -71,6 +72,7 @@ public class AdminService {
                 sDTO.getCreationDate(),
                 sDTO.getInterestRate(),
                 sDTO.getCheckingPrimaryOwner(),
+                sDTO.getCheckingSecOwner(),
                 sDTO.getSecreKey());
         return savingsRepository.save(newSavings);}
         else throw new Exception("Admin not found");
@@ -115,5 +117,11 @@ public class AdminService {
             ThirdParty newTP = new ThirdParty(tp.getHashedKey(),tp.getName());
             return thirdPartyRepository.save(newTP);
         } else throw new Exception("ThirdParty already existing");
+    }
+
+    public Admin newAdmin(Admin admin) throws Exception{
+        if (!adminRepository.findById(admin.getId()).isPresent()) {
+            return adminRepository.save(admin);
+        } throw new Exception("Admin already in the system");
     }
 }

@@ -1,5 +1,6 @@
 package IHProject.project.AccountHolders.entities;
 
+import IHProject.project.Security.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +21,14 @@ import javax.validation.constraints.NotNull;
 public class ThirdParty {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
     private String hashedKey;
     @NotNull
     private String name;
+
 
     public ThirdParty(String hashedKey, String name) {
         this.hashedKey = hashedKey;

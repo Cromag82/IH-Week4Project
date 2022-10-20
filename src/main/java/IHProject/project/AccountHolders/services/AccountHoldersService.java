@@ -1,5 +1,7 @@
 package IHProject.project.AccountHolders.services;
 
+import IHProject.project.AccountHolders.entities.AccountHolders;
+import IHProject.project.AccountHolders.repositories.AccountHoldersRepository;
 import IHProject.project.Accounts.entities.Checking;
 import IHProject.project.Accounts.repositories.CheckingRepository;
 import IHProject.project.Accounts.repositories.CreditCardRepository;
@@ -16,6 +18,9 @@ public class AccountHoldersService {
     CheckingRepository checkingRepository;
     @Autowired
     CreditCardRepository creditCardRepository;
+
+    @Autowired
+    AccountHoldersRepository accountHoldersRepository;
 
     public Money getBalance(long id) {
         checkingRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account not found"));
@@ -40,5 +45,9 @@ public class AccountHoldersService {
             checkingRepository.save(dest);
             return checkingRepository.findById(idDest).get().getBalance();
         } else throw new Exception("Not enough funds");
+    }
+
+    public AccountHolders newAHAccount(AccountHolders aH) {
+        return accountHoldersRepository.save(aH);
     }
 }

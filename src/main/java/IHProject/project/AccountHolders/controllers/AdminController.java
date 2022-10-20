@@ -4,6 +4,7 @@ import IHProject.project.AccountHolders.controllers.DTO.CreditCardDTO;
 import IHProject.project.AccountHolders.controllers.DTO.NewAccountDTO;
 import IHProject.project.AccountHolders.controllers.DTO.SavingsDTO;
 import IHProject.project.AccountHolders.controllers.DTO.ThirdPartyDTO;
+import IHProject.project.AccountHolders.entities.Admin;
 import IHProject.project.AccountHolders.entities.ThirdParty;
 import IHProject.project.AccountHolders.services.AdminService;
 import IHProject.project.AccountHolders.services.ThirdPartyService;
@@ -19,6 +20,12 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+
+    @PostMapping("/newAdmin/")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Admin newAdmin (@RequestBody Admin admin) throws Exception {
+        return adminService.newAdmin(admin);
+    }
 
     @PostMapping("/newAccount/{id}/checking")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -66,6 +73,8 @@ public class AdminController {
     public ThirdParty newThirdParty(@PathVariable long id, @RequestBody ThirdPartyDTO tp) throws Exception {
         return adminService.saveNewThirdParty(id, tp);
     }
+
+
 
 
 

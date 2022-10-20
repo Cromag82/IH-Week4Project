@@ -11,15 +11,26 @@ public class SavingsDTO {
     String secreKey;
     LocalDate creationDate;
     AccountHolders checkingPrimaryOwner;
+
+    AccountHolders checkingSecOwner;
     BigDecimal interestRate;
 
-    public SavingsDTO(Money balance, String secreKey, LocalDate creationDate, AccountHolders checkingPrimaryOwner, BigDecimal interestRate) {
+    public SavingsDTO(Money balance, String secreKey, LocalDate creationDate, AccountHolders checkingPrimaryOwner, AccountHolders checkingSecOwner,  BigDecimal interestRate) {
 
         this.balance = balance;
         this.secreKey = secreKey;
         this.creationDate = creationDate;
         this.checkingPrimaryOwner = checkingPrimaryOwner;
+        this.checkingSecOwner = checkingSecOwner;
         this.interestRate = interestRate;
+    }
+
+    public AccountHolders getCheckingSecOwner() {
+        return checkingSecOwner;
+    }
+
+    public void setCheckingSecOwner(AccountHolders checkingSecOwner) {
+        this.checkingSecOwner = checkingSecOwner;
     }
 
     public Money getBalance() {

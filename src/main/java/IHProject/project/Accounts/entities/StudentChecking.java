@@ -2,6 +2,7 @@ package IHProject.project.Accounts.entities;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.Accounts.enums.Status;
+import IHProject.project.Security.User;
 import IHProject.project.embeddables.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-public class StudentChecking extends Checking{
+public class StudentChecking extends Checking {
 
     public StudentChecking(long id, Money balance, String secreKey, Money penaltyFee, LocalDate creationDate, Status status, AccountHolders checkingPrimaryOwner, AccountHolders secondaryOwner) {
         super(id, balance, secreKey, penaltyFee, creationDate, status, checkingPrimaryOwner, secondaryOwner);
@@ -24,5 +25,7 @@ public class StudentChecking extends Checking{
     public StudentChecking(Money balance, LocalDate creationDate, String secreKey, AccountHolders checkingPrimaryOwner) {
         super(balance, creationDate, secreKey, checkingPrimaryOwner);
     }
+
+
 
 }

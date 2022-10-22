@@ -31,7 +31,7 @@ public class ThirdPartyService {
         checkingRepository.findById(idDest).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account not found"));
         Checking temp = checkingRepository.findById(idDest).get();
         if (thirdPartyRepository.findByHashedKey(hashedKey).isPresent() && (checkingRepository.findById(idDest).get().getSecreKey().equals(secretKey))) {
-            temp.setBalance(new Money(temp.getBalance().getAmount().add(money.getAmount())));
+            temp.setBalance(new Money(temp.getBalance().add(money.getAmount())));
             checkingRepository.save(temp);
         }
 

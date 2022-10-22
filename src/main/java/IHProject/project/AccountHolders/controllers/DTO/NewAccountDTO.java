@@ -2,6 +2,8 @@ package IHProject.project.AccountHolders.controllers.DTO;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.embeddables.Money;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import java.time.LocalDate;
 
@@ -9,7 +11,9 @@ public class NewAccountDTO {
 
     private Money balance;
     private String secreKey;
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate creationDate;
+
     private AccountHolders primaryOwner;
 
     public Money getBalance() {

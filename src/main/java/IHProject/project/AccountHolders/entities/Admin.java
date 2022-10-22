@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -22,7 +23,9 @@ public class Admin extends User {
     @NotNull
     private String name;
 
-    public Admin(String name) {
+
+    public Admin(String username, String password, String name) {
+        super(username, password);
         this.getRoleList().add(new Role("ADMIN"));
         this.name = name;
     }

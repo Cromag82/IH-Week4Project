@@ -8,8 +8,10 @@ import org.hibernate.annotations.ColumnDefault;
 
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,8 +33,9 @@ public class Checking {
             @AttributeOverride(name="currency", column=@Column(name="mBcurrency")),
             @AttributeOverride(name="amount", column = @Column(name="mBamount"))
     })
-    @DecimalMin(value = "250.00")
-    @Digits(integer=3, fraction=2)
+    //@DecimalMin(value = "250.00")
+    //@Digits(integer=3, fraction=2)
+    //@NotNull
     private Money minimumBalance;
 
     @Embedded
@@ -47,22 +50,22 @@ public class Checking {
             @AttributeOverride(name="amount", column = @Column(name="mMFBamount"))
     })
     @ColumnDefault(value = "12.00")
-    @Digits(integer=2, fraction=2)
+    //@Digits(integer=2, fraction=2)
     private Money monthlyMaintenanceFee;
     private LocalDate creationDate;
     @Enumerated
     private Status status;
 
     //  @NonNull
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn( name = "primaryOwnerid")
     private AccountHolders checkingPrimaryOwner;
 
     @Basic(optional=true)
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER/*,cascade = CascadeType.ALL*/)
     private AccountHolders secondaryOwner;
 
-    @OneToMany(mappedBy = "checking")
+    @OneToMany(mappedBy = "checking", cascade=CascadeType.ALL)
     private List<Transactions> transactionsList;
 
     public List<Transactions> getTransactionsList() {
@@ -77,7 +80,7 @@ public class Checking {
         this.id = id;
         this.balance = balance;
         this.secreKey = secreKey;
-        this.minimumBalance = new Money(BigDecimal.valueOf(250.00));
+        setMinimumBalance();
         this.penaltyFee = penaltyFee;
         this.creationDate = creationDate;
         this.status = status;
@@ -111,5 +114,14 @@ public class Checking {
             this.balance = balance;
         }
 
+    }
+
+    public void setMinimumBalance() {
+
+        this.minimumBalance = new Money(BigDecimal.valueOf(250.00));
+    }
+
+    public BigDecimal getBalance() {
+        return balance.getAmount();
     }
 }

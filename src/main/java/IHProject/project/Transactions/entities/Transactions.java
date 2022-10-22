@@ -22,7 +22,7 @@ public class Transactions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
     private Checking checking;
 
@@ -46,14 +46,14 @@ public class Transactions {
         for (Transactions tran : this.checking.getTransactionsList()) {
             if (tran.transactionTime.getDayOfYear() == (day-1)) {
                 traList.add(tran);
-                sum.add(tran.checking.getBalance().getAmount());
+                sum.add(tran.checking.getBalance());
             }
         }
 
         Transactions tra2 = this.checking.getTransactionsList().get(this.checking.getTransactionsList().size() - 1);
 
         if (this.getTransactionTime().getDayOfWeek().getValue() > tra2.getTransactionTime().getDayOfWeek().getValue()
-                && this.checking.getBalance().getAmount().add(tra2.checking.getBalance().getAmount()).
+                && this.checking.getBalance().add(tra2.checking.getBalance()).
                 compareTo(sum.multiply(BigDecimal.valueOf(1.50))) == 1) {
             this.checking.setStatus(Status.FROZEN);
         }

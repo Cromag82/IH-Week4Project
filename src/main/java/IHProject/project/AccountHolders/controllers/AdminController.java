@@ -15,20 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 public class AdminController {
 
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/newAdmin/")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/newAdmin")
+    @ResponseStatus(HttpStatus.CREATED)
     public Admin newAdmin (@RequestBody Admin admin) throws Exception {
         return adminService.newAdmin(admin);
     }
 
     @PostMapping("/newAccount/{id}/checking")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     public void createNewAccount(@PathVariable long id, @RequestBody NewAccountDTO naDTO) throws Exception {
         adminService.saveCheckingAccount(id, naDTO);
     }
@@ -46,7 +48,7 @@ public class AdminController {
 
     @GetMapping("/AccountBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Money getBalance (@PathVariable long id) {
+    public BigDecimal getBalance (@PathVariable long id) {
        return adminService.getBalance(id);
     }
 
@@ -58,7 +60,7 @@ public class AdminController {
 
     @GetMapping("/CreditCardBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Money getCCBalance (@PathVariable long id) {
+    public BigDecimal getCCBalance (@PathVariable long id) {
         return adminService.getCCBalance(id);
     }
 

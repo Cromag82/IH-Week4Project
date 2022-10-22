@@ -5,11 +5,14 @@ Java 17</br>
 UTF-8
 
 - Class diagram attached at resources folder
-- Structure efficiency matched
+- Structure efficiency matched 
+- Some persistance annotations have been flagged for testing
 - Swagger IU available for endpoints (http://localhost:8080/swagger-ui/index.html#/)
-- Testing units not matched
-- Security implementation 
+- Testing units not matched, few matched.
+- Security implementation completed.
 - MySql5 Dialect
-- Bonus: first method made, untested.
+- Bonus: first method made, untested, unimplemented.
 
+<object data="src/main/resources/Week4ProjectClassDiagram.pdf" type="application/pdf" width="100%"> 
+</object>
 

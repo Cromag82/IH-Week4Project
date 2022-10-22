@@ -16,14 +16,13 @@ public class User {
     private long id;
     private String username;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roleList = new ArrayList<>();
 
-    public User(long id, String username, String password, List<Role> roleList) {
-        this.id = id;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.roleList = roleList;
+
     }
 
 

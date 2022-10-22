@@ -25,11 +25,11 @@ public class CreditCard {
     private Money balance;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER/*,cascade = CascadeType.PERSIST*/)
     @JoinColumn( name = "primaryOwnerid")
     private AccountHolders creditCardPrimaryOwner;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER/*,cascade = CascadeType.PERSIST*/)
     @Basic(optional=true)
     private AccountHolders cCsecondaryOwner;
 
@@ -38,8 +38,8 @@ public class CreditCard {
             @AttributeOverride(name="currency", column=@Column(name="cLcurrency")),
             @AttributeOverride(name="amount", column = @Column(name="CLamount"))
     })
-    @DecimalMax(value = "100000.00")
-    @Digits(integer=6, fraction=2)
+    //@DecimalMax(value = "100000.00")
+    //@Digits(integer=6, fraction=2)
     @ColumnDefault(value = "100.00")
     private Money creditLimit;
     @ColumnDefault("0.2")
@@ -68,11 +68,16 @@ public class CreditCard {
     public void applyInterest(){
         if ((LocalDate.now().getMonthValue() - this.interestApplication.getMonthValue()) > 1 ) {
             this.setBalance(new Money(
-               this.getBalance().getAmount().multiply(
+               this.getBalance().multiply(
                this.interestRate.add(BigDecimal.valueOf(1))).multiply(
                BigDecimal.valueOf((LocalDate.now().getMonthValue() - this.interestApplication.getMonthValue()))
                     )));
             this.interestApplication.plusMonths(LocalDate.now().getMonthValue() - this.interestApplication.getMonthValue());
         }
     }
+
+    public BigDecimal getBalance() {
+        return balance.getAmount();
+    }
+
 }

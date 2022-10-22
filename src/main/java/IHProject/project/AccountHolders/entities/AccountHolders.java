@@ -6,6 +6,8 @@ import IHProject.project.Security.Role;
 import IHProject.project.Security.User;
 import IHProject.project.embeddables.Adress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,7 @@ public class AccountHolders extends User {
 
     private String name;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
 
     @Embedded
@@ -41,19 +44,22 @@ public class AccountHolders extends User {
     })
     private Adress mailingAdress;
 
-    @OneToMany(mappedBy = "checkingPrimaryOwner")
+    @OneToMany(mappedBy = "checkingPrimaryOwner", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Checking> accountsList;
 
-    @OneToMany(mappedBy = "creditCardPrimaryOwner")
+    @OneToMany(mappedBy = "creditCardPrimaryOwner", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private List<CreditCard> creditCardList;
 
-    public AccountHolders(String name, LocalDate birthDate, Adress primaryAddress, Adress mailingAdress) {
+
+    public AccountHolders(String username, String password, String name, LocalDate birthDate, Adress primaryAddress, Adress mailingAdress) {
+        super(username, password);
         this.name = name;
         this.birthDate = birthDate;
         this.primaryAddress = primaryAddress;
         this.mailingAdress = mailingAdress;
         this.getRoleList().add(new Role("USER"));
+
     }
 }

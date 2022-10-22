@@ -17,8 +17,8 @@ import java.time.LocalDate;
 @Getter
 public class Savings extends Checking {
     @ColumnDefault(value = "0.00025")
-    @DecimalMax(value = "0.5", inclusive = false)
-    @Digits(integer=2, fraction=5)
+    //@DecimalMax(value = "0.5", inclusive = false)
+    //@Digits(integer=2, fraction=5)
     private BigDecimal interestRate;
     private LocalDate interestApplication = LocalDate.now();
 
@@ -43,7 +43,7 @@ public class Savings extends Checking {
     public void applyInterest (){
         if ((LocalDate.now().getYear() - this.interestApplication.getYear()) > 1 ) {
             this.setBalance(new Money(
-                    this.getBalance().getAmount().multiply(
+                    this.getBalance().multiply(
                     this.interestRate.add(BigDecimal.valueOf(1))).multiply(
                     BigDecimal.valueOf((LocalDate.now().getYear() - this.interestApplication.getYear()))
             )));

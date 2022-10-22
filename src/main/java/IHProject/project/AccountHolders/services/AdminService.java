@@ -19,9 +19,11 @@ import IHProject.project.Accounts.repositories.StudentCheckingRepository;
 import IHProject.project.embeddables.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -45,6 +47,9 @@ public class AdminService {
 
     @Autowired
     ThirdPartyRepository thirdPartyRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public Checking saveCheckingAccount (long id, NewAccountDTO dto) throws Exception {
         if (adminRepository.findById(id).isPresent() && ((LocalDate.now().getYear() - dto.getPrimaryOwner().getBirthDate().getYear())) >= 24 ) {
@@ -91,12 +96,12 @@ public class AdminService {
         else throw new Exception("Admin not found");
     }
 
-    public Money getBalance(long id) throws ResponseStatusException {
+    public BigDecimal getBalance(long id) throws ResponseStatusException {
         checkingRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account not found"));
         return checkingRepository.findById(id).get().getBalance();
     }
 
-    public Money getCCBalance(long id) throws ResponseStatusException {
+    public BigDecimal getCCBalance(long id) throws ResponseStatusException {
         creditCardRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Account not found"));
         return creditCardRepository.findById(id).get().getBalance();
     }
@@ -119,9 +124,11 @@ public class AdminService {
         } else throw new Exception("ThirdParty already existing");
     }
 
-    public Admin newAdmin(Admin admin) throws Exception{
-        if (!adminRepository.findById(admin.getId()).isPresent()) {
-            return adminRepository.save(admin);
-        } throw new Exception("Admin already in the system");
+    public Admin newAdmin(Admin admin) throws ResponseStatusException{
+        if (adminRepository.findByName(admin.getName()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Admin already present");
+        }
+        passwordEncoder.encode(admin.getPassword());
+        return adminRepository.save(admin);
     }
 }

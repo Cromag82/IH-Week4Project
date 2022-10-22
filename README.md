@@ -8,7 +8,7 @@ UTF-8
 - Structure efficiency matched 
 - Some persistance annotations have been flagged for testing
 - Swagger IU available for endpoints (http://localhost:8080/swagger-ui/index.html#/)
-- Testing units not matched, few matched.
+- Testing units not matched, only a few done.
 - Security implementation completed.
 - MySql5 Dialect
 - Bonus: first method made, untested, unimplemented.

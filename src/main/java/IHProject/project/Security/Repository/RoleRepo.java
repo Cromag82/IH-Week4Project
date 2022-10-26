@@ -1,7 +1,6 @@
 package IHProject.project.Security.Repository;
 
-import IHProject.project.Security.Role;
-import IHProject.project.Security.User;
+import IHProject.project.Security.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

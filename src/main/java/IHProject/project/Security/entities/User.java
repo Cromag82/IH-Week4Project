@@ -1,5 +1,6 @@
-package IHProject.project.Security;
+package IHProject.project.Security.entities;
 
+import IHProject.project.Security.entities.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

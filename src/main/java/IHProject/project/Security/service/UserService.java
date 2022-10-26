@@ -4,8 +4,8 @@ package IHProject.project.Security.service;
 
 import IHProject.project.Security.Repository.RoleRepo;
 import IHProject.project.Security.Repository.UserRepo;
-import IHProject.project.Security.Role;
-import IHProject.project.Security.User;
+import IHProject.project.Security.entities.Role;
+import IHProject.project.Security.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

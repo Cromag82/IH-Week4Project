@@ -2,8 +2,8 @@ package IHProject.project.AccountHolders.entities;
 
 import IHProject.project.Accounts.entities.Checking;
 import IHProject.project.Accounts.entities.CreditCard;
-import IHProject.project.Security.Role;
-import IHProject.project.Security.User;
+import IHProject.project.Security.entities.Role;
+import IHProject.project.Security.entities.User;
 import IHProject.project.embeddables.Adress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

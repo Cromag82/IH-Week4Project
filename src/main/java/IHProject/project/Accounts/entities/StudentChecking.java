@@ -2,14 +2,12 @@ package IHProject.project.Accounts.entities;
 
 import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.Accounts.enums.Status;
-import IHProject.project.Security.User;
 import IHProject.project.embeddables.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity

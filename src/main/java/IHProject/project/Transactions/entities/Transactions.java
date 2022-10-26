@@ -2,6 +2,7 @@ package IHProject.project.Transactions.entities;
 
 import IHProject.project.Accounts.entities.Checking;
 import IHProject.project.Accounts.enums.Status;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

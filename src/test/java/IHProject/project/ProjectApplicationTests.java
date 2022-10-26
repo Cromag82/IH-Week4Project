@@ -1,5 +1,6 @@
 package IHProject.project;
 import IHProject.project.AccountHolders.controllers.DTO.NewAccountDTO;
+import IHProject.project.AccountHolders.controllers.DTO.SavingsDTO;
 import IHProject.project.AccountHolders.controllers.DTO.TransferMoneyDTO;
 import IHProject.project.AccountHolders.entities.Admin;
 import IHProject.project.AccountHolders.entities.ThirdParty;
@@ -10,6 +11,7 @@ import IHProject.project.Accounts.entities.CreditCard;
 import IHProject.project.Accounts.enums.Status;
 import IHProject.project.Accounts.repositories.CheckingRepository;
 import IHProject.project.Accounts.repositories.CreditCardRepository;
+import IHProject.project.Accounts.repositories.SavingsRepository;
 import IHProject.project.Accounts.repositories.StudentCheckingRepository;
 import IHProject.project.Transactions.entities.Transactions;
 import IHProject.project.Transactions.repository.TransactionsRepository;
@@ -20,6 +22,7 @@ import IHProject.project.embeddables.Money;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +35,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -70,6 +74,8 @@ class ProjectApplicationTests {
 	CreditCardRepository creditCardRepository;
 	@Autowired
 	TransactionsRepository transactionsRepository;
+	@Autowired
+	SavingsRepository savingsRepository;
 
 
 	Checking accountTest;
@@ -166,9 +172,9 @@ class ProjectApplicationTests {
 
 	}
 
-	//doesn´t work with cascade, nor without it!!!
+	//doesn´t work with cascade, nor without it!!! This is because classes are parent-child relationship
 	@Test
-	void newStudent_Account_ok() throws Exception {
+	public void newStudent_Account_ok() throws Exception {
 		AccountHolders holdersTest2 = new AccountHolders("nombre", "contraseña","Asaf", LocalDate.of(2010,05,15), new Adress("Cadi", "3", "8320L", "Dosrius", "Dis1"),new Adress("Cadi", "3", "8320L", "Dosrius", "Dis1"));
 		NewAccountDTO naDTO = new NewAccountDTO(new Money(BigDecimal.valueOf(2000.00)),"secretKey",LocalDate.now(),holdersTest2);
 		String body = objectMapper.writeValueAsString(naDTO);
@@ -179,8 +185,35 @@ class ProjectApplicationTests {
 		assertThat(mvcResult.getResponse().getContentAsString().contains("student"));
 		assertEquals(1, studentCheckingRepository.findAll().size() == 1);
 
+	}
+	//same issue as above;
+	//doesn´t work with cascade, nor without it!!! This is because classes are parent-child relationship
+	@Test
+	public void newSaving_Account_Ok() throws Exception {
+		SavingsDTO testSavingDTO = new SavingsDTO(new Money(BigDecimal.valueOf(1000.00)),"secretKey",LocalDate.now(),holdersTest,holdersTest,new BigDecimal("0.1"));
+		String body = objectMapper.writeValueAsString(testSavingDTO);
+		MvcResult mvcResult = mockMvc.perform(post("/newAccount/1/savings" ).content(body).contentType(MediaType.APPLICATION_JSON)).
+				andExpect(status().isCreated()).andReturn();
+
+		assertThat(mvcResult.getResponse().getContentAsString().contains("secretKey"));
+		assertEquals(1,savingsRepository.findAll().size());
 
 	}
+	//same problem, can´t test
+	@Test
+	public void setBalance_Ok() throws Exception {
+
+		String body = objectMapper.writeValueAsString("1" + new Money(BigDecimal.valueOf(2000.00)));
+		MvcResult mvcResult = mockMvc.perform(put("/AccountBalance/" + checkingRepository.findById(Long.valueOf("1")).get().getId()).content(body).contentType(MediaType.APPLICATION_JSON)).
+				andExpect(status().isAccepted()).andReturn();
+
+		assertThat(mvcResult.getResponse().getContentAsString().contains("2000.00"));
+		Assertions.assertThat(checkingRepository.findById(Long.valueOf("1")).get().getBalance().equals("2000.00"));
+
+
+	}
+
+
 
 
 

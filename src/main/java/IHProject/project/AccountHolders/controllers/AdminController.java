@@ -52,7 +52,7 @@ public class AdminController {
        return adminService.getBalance(id);
     }
 
-    @PostMapping("/AccountBalance/{id}")
+    @PutMapping("/AccountBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void setAccountBalance (@PathVariable long id, @RequestParam Money money) {
         adminService.setAccountBalance(id, money);
@@ -64,7 +64,7 @@ public class AdminController {
         return adminService.getCCBalance(id);
     }
 
-    @PostMapping("/CreditCardBalance/{id}")
+    @PutMapping("/CreditCardBalance/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void setCCBalance (@PathVariable long id, @RequestParam Money money) {
         adminService.setCCBalance(id, money);

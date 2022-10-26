@@ -7,8 +7,8 @@ This resource page is Security implementation
 
 package IHProject.project.Security.API;
 
-import IHProject.project.Security.Role;
-import IHProject.project.Security.User;
+import IHProject.project.Security.entities.Role;
+import IHProject.project.Security.entities.User;
 import IHProject.project.Security.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

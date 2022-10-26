@@ -1,18 +1,13 @@
 package IHProject.project.AccountHolders.entities;
 
-import IHProject.project.Security.Role;
-import IHProject.project.Security.User;
-import lombok.AllArgsConstructor;
+import IHProject.project.Security.entities.Role;
+import IHProject.project.Security.entities.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor

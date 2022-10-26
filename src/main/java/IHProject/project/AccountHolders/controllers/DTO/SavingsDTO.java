@@ -2,6 +2,8 @@ package IHProject.project.AccountHolders.controllers.DTO;
 import IHProject.project.AccountHolders.entities.AccountHolders;
 import IHProject.project.Accounts.enums.Status;
 import IHProject.project.embeddables.Money;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -11,7 +13,6 @@ public class SavingsDTO {
     String secreKey;
     LocalDate creationDate;
     AccountHolders checkingPrimaryOwner;
-
     AccountHolders checkingSecOwner;
     BigDecimal interestRate;
 

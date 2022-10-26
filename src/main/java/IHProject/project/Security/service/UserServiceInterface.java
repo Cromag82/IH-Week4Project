@@ -2,8 +2,8 @@
 
 package IHProject.project.Security.service;
 
-import IHProject.project.Security.Role;
-import IHProject.project.Security.User;
+import IHProject.project.Security.entities.Role;
+import IHProject.project.Security.entities.User;
 
 import java.util.List;
 
